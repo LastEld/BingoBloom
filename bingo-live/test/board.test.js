@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createBoard, lineIds, resizeBoard, shuffleBoard, templates } from '../public/bloom-data.js';
+import { createBoard, lineIds, resizeBoard, shuffleBoard, templates } from '../public/game/board.js';
 
 test('Each template fills every supported grid with distinct tasks and personal rewards', () => {
   for (const key of Object.keys(templates)) {

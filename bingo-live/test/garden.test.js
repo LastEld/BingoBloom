@@ -1,11 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {createBoard, lineIds} from '../public/bloom-data.js';
-import {newStudio, startBoard, completeCell, pressPlant, finishBoard, repeatBoard, decodeStudio} from '../public/bloom-garden.js';
-import {composition} from '../public/bloom-specimen.js';
+import {createBoard, lineIds} from '../public/game/board.js';
+import {newStudio, startBoard, completeCell, pressPlant, finishBoard, repeatBoard, decodeStudio} from '../public/game/progress.js';
+import {composition} from '../public/plants/specimen.js';
 
-const catalog=JSON.parse(readFileSync(new URL('../public/bloom-art/plants/catalog.json',import.meta.url)));
+const catalog=JSON.parse(readFileSync(new URL('../public/assets/plants/catalog.json',import.meta.url)));
 function cycle(){
   const s=newStudio(),b=s.boards[0];
   startBoard(b,s.settings);

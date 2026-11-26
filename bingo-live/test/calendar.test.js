@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { endOfPeriod, calendarMonth, boardPeriod } from '../public/bloom-calendar.js';
-import { newStudio, decodeStudio } from '../public/bloom-garden.js';
+import { endOfPeriod, calendarMonth, boardPeriod } from '../public/game/calendar.js';
+import { newStudio, decodeStudio } from '../public/game/progress.js';
 
 test('Calendar deadlines keep local clock time and clamp short months and leap years',()=>{
   const jan=new Date(2028,0,31,16,45);

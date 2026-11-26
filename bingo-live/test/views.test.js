@@ -1,8 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { boardTile } from '../public/board-view.js';
-import { bookPage } from '../public/bloom-book.js';
-import { newStudio, startBoard, completeCell, pressPlant } from '../public/bloom-garden.js';
+import { boardTile } from '../public/ui/board-view.js';
+import { bookPage } from '../public/ui/herbarium-view.js';
+import { newStudio, startBoard, completeCell, pressPlant } from '../public/game/progress.js';
 
 test('A completed tile exposes its reward and keeps the original task in its accessible name', () => {
   const store = newStudio();
