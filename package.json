@@ -1,0 +1,9 @@
+{
+  "name": "bingo-bloom-workspace",
+  "private": true,
+  "scripts": {
+    "start": "node bingo-live/server.js",
+    "dev": "node --watch bingo-live/server.js",
+    "test": "npm --prefix bingo-live test"
+  }
+}
