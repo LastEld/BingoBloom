@@ -1,0 +1,676 @@
+{
+  "version": 2,
+  "active": "week-a",
+  "boards": [
+    {
+      "id": "week-a",
+      "title": "Мой ритм",
+      "subtitle": "Маленькие ритуалы заботы о себе на каждый день.",
+      "template": "cozy",
+      "size": 3,
+      "bonus": "Завтрак в любимом кафе",
+      "theme": "matcha",
+      "animation": "scratch",
+      "started": true,
+      "startedAt": "2026-11-26T10:00:00.000Z",
+      "boardSeed": "week-seed",
+      "durationLabel": "На неделю",
+      "calendarStart": "2026-11-26T10:00:00.000Z",
+      "calendarHidden": false,
+      "cover": "glasshouse",
+      "harvest": [],
+      "legacyLines": [],
+      "created": 1795687200000,
+      "cells": [
+        {
+          "id": "qa-22",
+          "task": "Прочитать 10 страниц",
+          "reward": "Выбрать десерт к чаю",
+          "icon": "book",
+          "color": 0,
+          "done": 0
+        },
+        {
+          "id": "qa-23",
+          "task": "Заварить любимый чай",
+          "reward": "Позвонить близкому человеку",
+          "icon": "cup",
+          "color": 1,
+          "done": 1795687200000
+        },
+        {
+          "id": "qa-24",
+          "task": "Прогуляться без телефона",
+          "reward": "Прогуляться новым маршрутом",
+          "icon": "leaf",
+          "color": 2,
+          "done": 1795687200000
+        },
+        {
+          "id": "qa-25",
+          "task": "Записать три хороших момента",
+          "reward": "Нарисовать что-нибудь для себя",
+          "icon": "pen",
+          "color": 3,
+          "done": 1795687200000
+        },
+        {
+          "id": "qa-26",
+          "task": "Послушать новый альбом",
+          "reward": "Включить любимый альбом",
+          "icon": "music",
+          "color": 4,
+          "done": 0
+        },
+        {
+          "id": "qa-27",
+          "task": "Встретить утро без спешки",
+          "reward": "Потанцевать под любимую песню",
+          "icon": "sun",
+          "color": 5,
+          "done": 0
+        },
+        {
+          "id": "qa-28",
+          "task": "Написать другу",
+          "reward": "Купить красивую открытку",
+          "icon": "letter",
+          "color": 6,
+          "done": 1795687200000
+        },
+        {
+          "id": "qa-29",
+          "task": "Сделать что-то для себя",
+          "reward": "Пересмотреть любимые фотографии",
+          "icon": "heart",
+          "color": 7,
+          "done": 0
+        },
+        {
+          "id": "qa-30",
+          "task": "Лечь спать пораньше",
+          "reward": "Устроить вечер без планов",
+          "icon": "moon",
+          "color": 8,
+          "done": 0
+        }
+      ]
+    },
+    {
+      "id": "month-b",
+      "title": "Мой ритм",
+      "subtitle": "Новые слова и маленькие шаги к свободной речи.",
+      "template": "language",
+      "size": 5,
+      "bonus": "Вечер кино на языке оригинала",
+      "theme": "matcha",
+      "animation": "scratch",
+      "started": true,
+      "startedAt": "2026-11-26T10:00:00.000Z",
+      "boardSeed": "month-seed",
+      "durationLabel": "На месяц",
+      "calendarStart": "2026-11-26T10:00:00.000Z",
+      "calendarHidden": false,
+      "cover": "glasshouse",
+      "harvest": [],
+      "legacyLines": [],
+      "created": 1795687200000,
+      "cells": [
+        {
+          "id": "qa-33",
+          "task": "Выучить пять новых слов",
+          "reward": "Выбрать десерт к чаю",
+          "icon": "book",
+          "color": 0,
+          "done": 0
+        },
+        {
+          "id": "qa-34",
+          "task": "Прочитать короткую статью",
+          "reward": "Позвонить близкому человеку",
+          "icon": "cup",
+          "color": 1,
+          "done": 0
+        },
+        {
+          "id": "qa-35",
+          "task": "Послушать подкаст",
+          "reward": "Прогуляться новым маршрутом",
+          "icon": "leaf",
+          "color": 2,
+          "done": 0
+        },
+        {
+          "id": "qa-36",
+          "task": "Рассказать о своём дне",
+          "reward": "Нарисовать что-нибудь для себя",
+          "icon": "pen",
+          "color": 3,
+          "done": 0
+        },
+        {
+          "id": "qa-37",
+          "task": "Перевести любимую песню",
+          "reward": "Включить любимый альбом",
+          "icon": "music",
+          "color": 4,
+          "done": 1795687200000
+        },
+        {
+          "id": "qa-38",
+          "task": "Написать открытку",
+          "reward": "Потанцевать под любимую песню",
+          "icon": "sun",
+          "color": 5,
+          "done": 0
+        },
+        {
+          "id": "qa-39",
+          "task": "Повторить сложные слова",
+          "reward": "Купить красивую открытку",
+          "icon": "letter",
+          "color": 6,
+          "done": 0
+        },
+        {
+          "id": "qa-40",
+          "task": "Посмотреть сцену без субтитров",
+          "reward": "Пересмотреть любимые фотографии",
+          "icon": "heart",
+          "color": 7,
+          "done": 0
+        },
+        {
+          "id": "qa-41",
+          "task": "Записать голосовое сообщение",
+          "reward": "Устроить вечер без планов",
+          "icon": "moon",
+          "color": 8,
+          "done": 0
+        },
+        {
+          "id": "qa-42",
+          "task": "Назвать десять предметов дома",
+          "reward": "Поставить цветок на рабочий стол",
+          "icon": "book",
+          "color": 0,
+          "done": 0
+        },
+        {
+          "id": "qa-43",
+          "task": "Задать вопрос собеседнику",
+          "reward": "Посмотреть серию любимого сериала",
+          "icon": "cup",
+          "color": 1,
+          "done": 0
+        },
+        {
+          "id": "qa-44",
+          "task": "Прочитать рецепт",
+          "reward": "Сделать перерыв с книгой",
+          "icon": "leaf",
+          "color": 2,
+          "done": 0
+        },
+        {
+          "id": "qa-45",
+          "task": "Выучить три устойчивые фразы",
+          "reward": "Медленно выпить любимый кофе",
+          "icon": "pen",
+          "color": 3,
+          "done": 0
+        },
+        {
+          "id": "qa-46",
+          "task": "Описать фотографию",
+          "reward": "Устроить десять минут тишины",
+          "icon": "music",
+          "color": 4,
+          "done": 0
+        },
+        {
+          "id": "qa-47",
+          "task": "Поговорить о погоде",
+          "reward": "Принять тёплую ванну",
+          "icon": "sun",
+          "color": 5,
+          "done": 0
+        },
+        {
+          "id": "qa-48",
+          "task": "Разобрать одно правило",
+          "reward": "Выбрать десерт к чаю",
+          "icon": "letter",
+          "color": 6,
+          "done": 0
+        },
+        {
+          "id": "qa-49",
+          "task": "Подписать список покупок",
+          "reward": "Позвонить близкому человеку",
+          "icon": "heart",
+          "color": 7,
+          "done": 0
+        },
+        {
+          "id": "qa-50",
+          "task": "Пересказать новость",
+          "reward": "Прогуляться новым маршрутом",
+          "icon": "moon",
+          "color": 8,
+          "done": 0
+        },
+        {
+          "id": "qa-51",
+          "task": "Познакомиться на новом языке",
+          "reward": "Нарисовать что-нибудь для себя",
+          "icon": "book",
+          "color": 0,
+          "done": 0
+        },
+        {
+          "id": "qa-52",
+          "task": "Написать пять предложений",
+          "reward": "Включить любимый альбом",
+          "icon": "cup",
+          "color": 1,
+          "done": 0
+        },
+        {
+          "id": "qa-53",
+          "task": "Прочитать страницу книги",
+          "reward": "Потанцевать под любимую песню",
+          "icon": "leaf",
+          "color": 2,
+          "done": 0
+        },
+        {
+          "id": "qa-54",
+          "task": "Потренировать произношение",
+          "reward": "Купить красивую открытку",
+          "icon": "pen",
+          "color": 3,
+          "done": 0
+        },
+        {
+          "id": "qa-55",
+          "task": "Найти слова в песне",
+          "reward": "Пересмотреть любимые фотографии",
+          "icon": "music",
+          "color": 4,
+          "done": 0
+        },
+        {
+          "id": "qa-56",
+          "task": "Составить короткий диалог",
+          "reward": "Устроить вечер без планов",
+          "icon": "sun",
+          "color": 5,
+          "done": 0
+        },
+        {
+          "id": "qa-57",
+          "task": "Пройти мини-викторину",
+          "reward": "Поставить цветок на рабочий стол",
+          "icon": "letter",
+          "color": 6,
+          "done": 0
+        }
+      ]
+    },
+    {
+      "id": "draft-c",
+      "title": "Черновик",
+      "subtitle": "Личные задачи и награды в вашем ритме.",
+      "template": "blank",
+      "size": 3,
+      "bonus": "Вечер для себя",
+      "theme": "matcha",
+      "animation": "scratch",
+      "started": false,
+      "startedAt": null,
+      "boardSeed": "qa-59",
+      "durationLabel": "На неделю",
+      "calendarStart": "2026-11-26T10:00:00.000Z",
+      "calendarHidden": false,
+      "cover": "glasshouse",
+      "harvest": [],
+      "legacyLines": [],
+      "created": 1795687200000,
+      "cells": [
+        {
+          "id": "qa-60",
+          "task": "",
+          "reward": "",
+          "icon": "book",
+          "color": 0,
+          "done": 0
+        },
+        {
+          "id": "qa-61",
+          "task": "",
+          "reward": "",
+          "icon": "cup",
+          "color": 1,
+          "done": 0
+        },
+        {
+          "id": "qa-62",
+          "task": "",
+          "reward": "",
+          "icon": "leaf",
+          "color": 2,
+          "done": 0
+        },
+        {
+          "id": "qa-63",
+          "task": "",
+          "reward": "",
+          "icon": "pen",
+          "color": 3,
+          "done": 0
+        },
+        {
+          "id": "qa-64",
+          "task": "",
+          "reward": "",
+          "icon": "music",
+          "color": 4,
+          "done": 0
+        },
+        {
+          "id": "qa-65",
+          "task": "",
+          "reward": "",
+          "icon": "sun",
+          "color": 5,
+          "done": 0
+        },
+        {
+          "id": "qa-66",
+          "task": "",
+          "reward": "",
+          "icon": "letter",
+          "color": 6,
+          "done": 0
+        },
+        {
+          "id": "qa-67",
+          "task": "",
+          "reward": "",
+          "icon": "heart",
+          "color": 7,
+          "done": 0
+        },
+        {
+          "id": "qa-68",
+          "task": "",
+          "reward": "",
+          "icon": "moon",
+          "color": 8,
+          "done": 0
+        }
+      ]
+    }
+  ],
+  "basket": [
+    {
+      "uid": "qa-12",
+      "speciesId": "daisy",
+      "seed": "archive-oct/A1–B1–C1",
+      "formVersion": 2,
+      "state": "fresh",
+      "collectedAt": "2026-11-26T10:00:00.000Z",
+      "pressedAt": null,
+      "sourceBoardId": "archive-oct",
+      "sourceBoardTitle": "Прогулки в октябре",
+      "sourceLine": "A1–B1–C1",
+      "note": ""
+    }
+  ],
+  "book": [
+    {
+      "uid": "qa-13",
+      "speciesId": "cornflower",
+      "seed": "archive-oct/A2–B2–C2",
+      "state": "pressed",
+      "collectedAt": "2026-11-26T10:00:00.000Z",
+      "pressedAt": "2026-11-26T10:00:00.000Z",
+      "sourceBoardId": "archive-oct",
+      "sourceBoardTitle": "Прогулки в октябре",
+      "sourceLine": "A2–B2–C2",
+      "note": "Вечерняя прогулка"
+    },
+    {
+      "uid": "qa-14",
+      "speciesId": "clover",
+      "seed": "archive-oct/A1–A2–A3",
+      "formVersion": 1,
+      "state": "pressed",
+      "collectedAt": "2026-11-26T10:00:00.000Z",
+      "pressedAt": "2026-11-26T10:00:00.000Z",
+      "sourceBoardId": "archive-oct",
+      "sourceBoardTitle": "Прогулки в октябре",
+      "sourceLine": "A1–A2–A3",
+      "note": ""
+    },
+    {
+      "uid": "qa-15",
+      "speciesId": "clover",
+      "seed": "archive-oct/C1–B2–A3",
+      "formVersion": 2,
+      "state": "pressed",
+      "collectedAt": "2026-11-26T10:00:00.000Z",
+      "pressedAt": "2026-11-26T10:00:00.000Z",
+      "sourceBoardId": "archive-oct",
+      "sourceBoardTitle": "Прогулки в октябре",
+      "sourceLine": "C1–B2–A3",
+      "note": ""
+    },
+    {
+      "uid": "qa-16",
+      "speciesId": "daisy",
+      "seed": "archive-oct/B1–B2–B3",
+      "formVersion": 2,
+      "state": "pressed",
+      "collectedAt": "2026-11-26T10:00:00.000Z",
+      "pressedAt": "2026-11-26T10:00:00.000Z",
+      "sourceBoardId": "archive-oct",
+      "sourceBoardTitle": "Прогулки в октябре",
+      "sourceLine": "B1–B2–B3",
+      "note": ""
+    },
+    {
+      "uid": "qa-17",
+      "speciesId": "poppy",
+      "seed": "archive-oct/A3–B3–C3",
+      "formVersion": 2,
+      "state": "pressed",
+      "collectedAt": "2026-11-26T10:00:00.000Z",
+      "pressedAt": "2026-11-26T10:00:00.000Z",
+      "sourceBoardId": "archive-oct",
+      "sourceBoardTitle": "Прогулки в октябре",
+      "sourceLine": "A3–B3–C3",
+      "note": ""
+    },
+    {
+      "uid": "qa-18",
+      "speciesId": "cornflower",
+      "seed": "archive-oct/C1–C2–C3",
+      "formVersion": 2,
+      "state": "pressed",
+      "collectedAt": "2026-11-26T10:00:00.000Z",
+      "pressedAt": "2026-11-26T10:00:00.000Z",
+      "sourceBoardId": "archive-oct",
+      "sourceBoardTitle": "Прогулки в октябре",
+      "sourceLine": "C1–C2–C3",
+      "note": ""
+    },
+    {
+      "uid": "qa-19",
+      "speciesId": "poppy",
+      "seed": "archive-oct/A1–B2–C3",
+      "formVersion": 2,
+      "state": "pressed",
+      "collectedAt": "2026-11-26T10:00:00.000Z",
+      "pressedAt": "2026-11-26T10:00:00.000Z",
+      "sourceBoardId": "archive-oct",
+      "sourceBoardTitle": "Прогулки в октябре",
+      "sourceLine": "A1–B2–C3",
+      "note": ""
+    }
+  ],
+  "history": [
+    {
+      "id": "archive-oct",
+      "title": "Прогулки в октябре",
+      "subtitle": "Маленькие ритуалы заботы о себе на каждый день.",
+      "template": "cozy",
+      "size": 3,
+      "bonus": "Завтрак в любимом кафе",
+      "theme": "matcha",
+      "animation": "scratch",
+      "started": true,
+      "startedAt": "2026-11-26T10:00:00.000Z",
+      "boardSeed": "archive-oct",
+      "durationLabel": "На неделю",
+      "calendarStart": "2026-11-26T10:00:00.000Z",
+      "calendarHidden": false,
+      "cover": "glasshouse",
+      "harvest": [
+        {
+          "uid": "qa-12",
+          "speciesId": "daisy",
+          "seed": "archive-oct/A1–B1–C1",
+          "sourceLine": "A1–B1–C1"
+        },
+        {
+          "uid": "qa-13",
+          "speciesId": "cornflower",
+          "seed": "archive-oct/A2–B2–C2",
+          "sourceLine": "A2–B2–C2"
+        },
+        {
+          "uid": "qa-14",
+          "speciesId": "clover",
+          "seed": "archive-oct/A1–A2–A3",
+          "sourceLine": "A1–A2–A3"
+        },
+        {
+          "uid": "qa-15",
+          "speciesId": "clover",
+          "seed": "archive-oct/C1–B2–A3",
+          "sourceLine": "C1–B2–A3"
+        },
+        {
+          "uid": "qa-16",
+          "speciesId": "daisy",
+          "seed": "archive-oct/B1–B2–B3",
+          "sourceLine": "B1–B2–B3"
+        },
+        {
+          "uid": "qa-17",
+          "speciesId": "poppy",
+          "seed": "archive-oct/A3–B3–C3",
+          "sourceLine": "A3–B3–C3"
+        },
+        {
+          "uid": "qa-18",
+          "speciesId": "cornflower",
+          "seed": "archive-oct/C1–C2–C3",
+          "sourceLine": "C1–C2–C3"
+        },
+        {
+          "uid": "qa-19",
+          "speciesId": "poppy",
+          "seed": "archive-oct/A1–B2–C3",
+          "sourceLine": "A1–B2–C3"
+        }
+      ],
+      "legacyLines": [],
+      "created": 1795687200000,
+      "cells": [
+        {
+          "id": "qa-3",
+          "task": "Прочитать 10 страниц",
+          "reward": "Выбрать десерт к чаю",
+          "icon": "book",
+          "color": 0,
+          "done": 1795687200000
+        },
+        {
+          "id": "qa-4",
+          "task": "Заварить любимый чай",
+          "reward": "Позвонить близкому человеку",
+          "icon": "cup",
+          "color": 1,
+          "done": 1795687200000
+        },
+        {
+          "id": "qa-5",
+          "task": "Прогуляться без телефона",
+          "reward": "Прогуляться новым маршрутом",
+          "icon": "leaf",
+          "color": 2,
+          "done": 1795687200000
+        },
+        {
+          "id": "qa-6",
+          "task": "Записать три хороших момента",
+          "reward": "Нарисовать что-нибудь для себя",
+          "icon": "pen",
+          "color": 3,
+          "done": 1795687200000
+        },
+        {
+          "id": "qa-7",
+          "task": "Послушать новый альбом",
+          "reward": "Включить любимый альбом",
+          "icon": "music",
+          "color": 4,
+          "done": 1795687200000
+        },
+        {
+          "id": "qa-8",
+          "task": "Встретить утро без спешки",
+          "reward": "Потанцевать под любимую песню",
+          "icon": "sun",
+          "color": 5,
+          "done": 1795687200000
+        },
+        {
+          "id": "qa-9",
+          "task": "Написать другу",
+          "reward": "Купить красивую открытку",
+          "icon": "letter",
+          "color": 6,
+          "done": 1795687200000
+        },
+        {
+          "id": "qa-10",
+          "task": "Сделать что-то для себя",
+          "reward": "Пересмотреть любимые фотографии",
+          "icon": "heart",
+          "color": 7,
+          "done": 1795687200000
+        },
+        {
+          "id": "qa-11",
+          "task": "Лечь спать пораньше",
+          "reward": "Устроить вечер без планов",
+          "icon": "moon",
+          "color": 8,
+          "done": 1795687200000
+        }
+      ],
+      "finishedAt": "2026-11-26T10:00:00.000Z"
+    }
+  ],
+  "settings": {
+    "seedMode": "auto",
+    "manualSeed": "",
+    "coordinates": true,
+    "simpleMotion": false
+  },
+  "sound": false
+}
