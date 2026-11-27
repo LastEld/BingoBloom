@@ -546,7 +546,6 @@ function openCard(i, origin = null) {
       picture: source,
       tone: style.getPropertyValue('--tile' + c.color).trim(),
       ink: style.getPropertyValue('--ink').trim(),
-      coord: store.settings.coordinates ? coord : '',
       onRub: () => sound('scratch', store.sound),
       onThreshold: async () => {
         if (!dialog.open || !card.isConnected) return false;

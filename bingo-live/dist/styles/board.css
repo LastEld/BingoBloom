@@ -350,11 +350,10 @@ button,input,select,textarea {
 .tile {
   position: relative;
   min-width: 0;
-  display: block;
+  display: grid;
   padding: 0;
   isolation: isolate;
   min-height: 136px;
-  aspect-ratio: 1.76;
   border-radius: 16px;
   perspective: 850px;
   touch-action: manipulation;
@@ -398,16 +397,14 @@ button,input,select,textarea {
 
 /* Board tiles */
 .skin {
-  position: absolute;
-  inset: 0;
+  display: grid;
+  min-width: 0;
   border-radius: inherit;
-  transform-style: preserve-3d;
-  transition: transform .64s cubic-bezier(.2,.8,.28,1.14);
 }
 
 .side {
-  position: absolute;
-  inset: 0;
+  position: relative;
+  min-width: 0;
   border-radius: inherit;
   display: flex;
   flex-direction: column;
@@ -443,10 +440,8 @@ button,input,select,textarea {
   letter-spacing: -.25px;
   text-wrap: balance;
   overflow-wrap: anywhere;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  max-width: 100%;
+  flex: none;
 }
 
 .circle-mark {
@@ -470,12 +465,10 @@ button,input,select,textarea {
 
 .task-grid[data-size="4"] .tile {
   min-height: 114px;
-  aspect-ratio: 1.36;
 }
 
 .task-grid[data-size="5"] .tile {
   min-height: 112px;
-  aspect-ratio: 1.2;
 }
 
 .task-grid:not([data-size="3"]) .art {
@@ -1457,7 +1450,6 @@ input[type=checkbox] {
     width: 15px;
   }
   .task-grid:not([data-size="3"]) .task-text {
-    -webkit-line-clamp: 4;
     hyphens: auto;
     line-height: 1.2;
   }

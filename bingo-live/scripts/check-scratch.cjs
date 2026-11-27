@@ -51,9 +51,43 @@ async function check(browser, width, reducedMotion) {
   }
 }
 
+async function checkBoardLabels(browser) {
+  const page = await browser.newPage({serviceWorkers: 'block'});
+  try {
+    const state = structuredClone(fixture);
+    const board = state.boards.find(board => board.size === 5);
+    state.active = board.id;
+    board.cells[0].task = 'Попробовать новую растяжку после вечерней прогулки';
+    board.cells[1].reward = 'Позвонить близкому человеку и рассказать о своей неделе';
+    board.cells[1].done = Date.now();
+    await page.addInitScript(state => localStorage.setItem('bingo-bloom.studio.v1', JSON.stringify(state)), state);
+    await page.goto(process.env.BINGO_URL || 'http://localhost:5173');
+    const labels = page.locator('.tile .task-text');
+    await labels.first().waitFor();
+    assert.equal(await labels.count(), 25);
+    for (const width of [320, 360, 780, 1280]) {
+      await page.setViewportSize({width, height: 850});
+      const clipped = await labels.evaluateAll(labels => labels.filter(label => {
+        const range = document.createRange();
+        range.selectNodeContents(label);
+        const face = label.closest('.front').getBoundingClientRect();
+        return label.scrollHeight > label.clientHeight + 1 && getComputedStyle(label).overflowY === 'hidden' ||
+          Array.from(range.getClientRects()).some(line =>
+          line.top < face.top - 1 || line.bottom > face.bottom + 1 ||
+          line.left < face.left - 1 || line.right > face.right + 1);
+      }).map(label => label.textContent));
+      assert.deepEqual(clipped, [], 'Every line must fit at ' + width + ' px');
+      assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
+    }
+  } finally {
+    await page.close();
+  }
+}
+
 async function main() {
   const browser = await chromium.launch({executablePath: process.env.CHROME_PATH || undefined});
   try {
+    await checkBoardLabels(browser);
     await check(browser, 1280, 'no-preference');
     await check(browser, 360, 'reduce');
     console.log('Scratch reveal verified at 1280 and 360 px.');

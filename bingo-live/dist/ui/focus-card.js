@@ -2,7 +2,7 @@ import { reduced } from './effects.js';
 const WIDTH = 420;
 const HEIGHT = 370;
 
-function paintFace(ctx, cell, picture, tone, ink, coord) {
+function paintFace(ctx, cell, picture, tone, ink) {
   ctx.fillStyle = tone;
   ctx.fillRect(0, 0, WIDTH, HEIGHT);
   const glow = ctx.createLinearGradient(0, 0, WIDTH, HEIGHT);
@@ -27,12 +27,6 @@ function paintFace(ctx, cell, picture, tone, ink, coord) {
   }
   ctx.globalAlpha = 1;
   ctx.fillStyle = ink;
-  ctx.textAlign = 'left';
-  ctx.font = 'italic 16px Georgia';
-  ctx.fillText('Bingo Bloom', 27, 38);
-  ctx.textAlign = 'right';
-  ctx.font = '13px "Segoe UI", sans-serif';
-  ctx.fillText(coord, WIDTH - 27, 37);
   ctx.textAlign = 'center';
   const pictureSize = 125;
   const top = (HEIGHT - pictureSize) / 2;
@@ -72,7 +66,6 @@ export function scratchFace({
   picture,
   tone,
   ink,
-  coord,
   onThreshold,
   onDone,
   onRub
@@ -87,7 +80,7 @@ export function scratchFace({
   ctx.beginPath();
   ctx.roundRect(0, 0, WIDTH, HEIGHT, 22);
   ctx.clip();
-  paintFace(ctx, cell, picture, tone, ink, coord);
+  paintFace(ctx, cell, picture, tone, ink);
   ctx.restore();
   ctx.globalCompositeOperation = 'destination-out';
   ctx.lineCap = ctx.lineJoin = 'round';
