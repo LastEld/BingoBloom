@@ -1,4 +1,5 @@
 import {grow} from './growth.js';
+import {growV3} from './growth-v3.js';
 import {tintSprite} from './pigment.js';
 const directory='/assets/plants/';
 const originals=new Map();
@@ -10,7 +11,7 @@ export function seedHash(seed) {
   return h>>>0;
 }
 export const seedCode=seed=>seedHash(seed).toString(16).toUpperCase().padStart(8,'0');
-function generator(seed){
+export function generator(seed){
   let a=seedHash(seed);
   return ()=>{
     a=(a+0x6D2B79F5)|0;
@@ -19,7 +20,11 @@ function generator(seed){
     return ((t^(t>>>14))>>>0)/4294967296;
   };
 }
-export function composition(parts,seed,version=2){
+export function composition(parts,seed,version=1){
+  if(version===3){
+    const stream=name=>generator(JSON.stringify([3,parts.stems[0].file.split('-')[0],seed,name]));
+    return growV3(parts,stream('form'),stream('pigment'),stream('mounting'));
+  }
   if(version===2)return grow(parts,generator(seed));
   const rand=generator(seed),range=(a,b)=>a+(b-a)*rand();
   const pick=a=>a[Math.floor(rand()*a.length)];
@@ -48,26 +53,41 @@ export function composition(parts,seed,version=2){
   for(let i=0;i<numPetals;i++)petals.push({part:pick(parts.petals),x:(i%2?1:-1)*range(46,77)+125,y:range(143,248),height:range(12,21),angle:range(-75,75),flip:1});
   return {stem,x,y,stemW,stemH,leaves,flowers,tapes,petals,tilt:range(-10,10),pressAngle:range(-18,18),hue:range(-8,8),light:range(.94,1.06)};
 }
-function loadPart(part, pressed, seed, index){
+function loadPart(part, pressed, seed, index, version, role){
   const file=part.file;
-  const key=pressed ? JSON.stringify([file,seed,index]) : file;
+  const key=JSON.stringify(pressed ? [version,file,seed,role,'pressed'] : [version,file,'fresh']);
   if(washes.has(key))return washes.get(key);
   if(!originals.has(file)){
     const img=new Image();
     img.src=directory+file.split('-')[0]+'/'+file;
     originals.set(file,img.decode().then(()=>img).catch(err=>{originals.delete(file);throw err;}));
   }
-  const wash=originals.get(file).then(img=>tintSprite(img,file,pressed,pressed?generator(key):null))
+  const maskSeed=version===3 ? key : JSON.stringify([file,seed,index]);
+  const wash=originals.get(file).then(img=>tintSprite(img,file,pressed,pressed?generator(maskSeed):null,version))
     .catch(err=>{if(washes.get(key)===wash)washes.delete(key);throw err;});
   washes.set(key,wash);
   if(washes.size>64)washes.delete(washes.keys().next().value);
   return wash;
 }
-export async function specimenParts(plant){
-  catalog??=fetch(directory+'catalog.json').then(r=>{if(!r.ok)throw Error('catalog');return r.json();}).catch(e=>{catalog=null;throw e;});
-  const m=composition((await catalog)[plant.speciesId],plant.seed,plant.formVersion??1),pressed=plant.state==='pressed';
-  const layers=[...m.leaves,...m.flowers,...(pressed?m.petals:[])];
-  const parts=[m.stem,...layers.map(l=>l.part)];
-  const painted=await Promise.all(parts.map((part,index)=>loadPart(part,pressed,plant.seed,index)));
-  return {m,painted,layers,pressed};
+export async function specimenParts(plant, transition = false) {
+  catalog ??= fetch(directory + 'catalog.json').then(response => {
+    if (!response.ok) throw Error('catalog');
+    return response.json();
+  }).catch(error => { catalog = null; throw error; });
+  const version = plant.formVersion ?? 1;
+  const m = composition((await catalog)[plant.speciesId], plant.seed, version);
+  const layers = [...m.leaves, ...m.flowers, ...m.petals];
+  const parts = [m.stem, ...layers.map(layer => layer.part)];
+  const roles = ['stem', ...m.leaves.map((_, i) => 'leaf' + i),
+    ...m.flowers.map((_, i) => 'flower' + i), ...m.petals.map((_, i) => 'petal' + i)];
+  function load(pressed) {
+    const visible = pressed ? parts : parts.slice(0, 1 + m.leaves.length + m.flowers.length);
+    return Promise.all(visible.map((part, i) =>
+      loadPart(part, pressed, plant.seed, i, version, version === 3 ? roles[i] : i)));
+  }
+  const pressed = plant.state === 'pressed';
+  const [fresh, dry] = await Promise.all([
+    (transition || !pressed) && load(false), (transition || pressed) && load(true)
+  ]);
+  return {m, layers, fresh, dry};
 }

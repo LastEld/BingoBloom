@@ -1,0 +1,189 @@
+{
+  "version": 2,
+  "active": "qa-69",
+  "boards": [
+    {
+      "id": "qa-69",
+      "title": "Четыре линии через B2",
+      "subtitle": "Маленькие ритуалы заботы о себе на каждый день.",
+      "template": "cozy",
+      "size": 3,
+      "bonus": "Завтрак в любимом кафе",
+      "theme": "matcha",
+      "animation": "scratch",
+      "started": true,
+      "startedAt": "2026-11-26T10:00:00.000Z",
+      "boardSeed": "center-4",
+      "durationLabel": "На неделю",
+      "calendarStart": "2026-11-26T10:00:00.000Z",
+      "calendarHidden": false,
+      "cover": "glasshouse",
+      "harvest": [
+        {
+          "uid": "02e19434-c259-40b8-ba0d-896223654721",
+          "speciesId": "daisy",
+          "seed": "center-4/A1–B1–C1",
+          "sourceLine": "A1–B1–C1"
+        },
+        {
+          "uid": "2489933c-5935-43eb-a1f0-7e94b182949d",
+          "speciesId": "clover",
+          "seed": "center-4/A1–A2–A3",
+          "sourceLine": "A1–A2–A3"
+        },
+        {
+          "uid": "c358864a-f30d-4dbf-871a-78a91d6cf8e1",
+          "speciesId": "poppy",
+          "seed": "center-4/A3–B3–C3",
+          "sourceLine": "A3–B3–C3"
+        },
+        {
+          "uid": "fa41ce90-7f8d-4530-b389-18ee1d7ea1ec",
+          "speciesId": "cornflower",
+          "seed": "center-4/C1–C2–C3",
+          "sourceLine": "C1–C2–C3"
+        }
+      ],
+      "legacyLines": [],
+      "created": 1795687200000,
+      "cells": [
+        {
+          "id": "qa-71",
+          "task": "Прочитать 10 страниц",
+          "reward": "Выбрать десерт к чаю",
+          "icon": "book",
+          "color": 0,
+          "done": 1795708579850
+        },
+        {
+          "id": "qa-72",
+          "task": "Заварить любимый чай",
+          "reward": "Позвонить близкому человеку",
+          "icon": "cup",
+          "color": 1,
+          "done": 1795708579850
+        },
+        {
+          "id": "qa-73",
+          "task": "Прогуляться без телефона",
+          "reward": "Прогуляться новым маршрутом",
+          "icon": "leaf",
+          "color": 2,
+          "done": 1795708579850
+        },
+        {
+          "id": "qa-74",
+          "task": "Записать три хороших момента",
+          "reward": "Нарисовать что-нибудь для себя",
+          "icon": "pen",
+          "color": 3,
+          "done": 1795708579856
+        },
+        {
+          "id": "qa-75",
+          "task": "Послушать новый альбом",
+          "reward": "Включить любимый альбом",
+          "icon": "music",
+          "color": 4,
+          "done": 0
+        },
+        {
+          "id": "qa-76",
+          "task": "Встретить утро без спешки",
+          "reward": "Потанцевать под любимую песню",
+          "icon": "sun",
+          "color": 5,
+          "done": 1795708579856
+        },
+        {
+          "id": "qa-77",
+          "task": "Написать другу",
+          "reward": "Купить красивую открытку",
+          "icon": "letter",
+          "color": 6,
+          "done": 1795708579856
+        },
+        {
+          "id": "qa-78",
+          "task": "Сделать что-то для себя",
+          "reward": "Пересмотреть любимые фотографии",
+          "icon": "heart",
+          "color": 7,
+          "done": 1795708579856
+        },
+        {
+          "id": "qa-79",
+          "task": "Лечь спать пораньше",
+          "reward": "Устроить вечер без планов",
+          "icon": "moon",
+          "color": 8,
+          "done": 1795708579856
+        }
+      ]
+    }
+  ],
+  "basket": [
+    {
+      "uid": "2489933c-5935-43eb-a1f0-7e94b182949d",
+      "speciesId": "clover",
+      "seed": "center-4/A1–A2–A3",
+      "formVersion": 2,
+      "state": "fresh",
+      "collectedAt": "2026-11-26T15:56:19.856Z",
+      "pressedAt": null,
+      "sourceBoardId": "qa-69",
+      "sourceBoardTitle": "Четыре линии через B2",
+      "sourceLine": "A1–A2–A3",
+      "note": ""
+    },
+    {
+      "uid": "c358864a-f30d-4dbf-871a-78a91d6cf8e1",
+      "speciesId": "poppy",
+      "seed": "center-4/A3–B3–C3",
+      "formVersion": 2,
+      "state": "fresh",
+      "collectedAt": "2026-11-26T15:56:19.856Z",
+      "pressedAt": null,
+      "sourceBoardId": "qa-69",
+      "sourceBoardTitle": "Четыре линии через B2",
+      "sourceLine": "A3–B3–C3",
+      "note": ""
+    },
+    {
+      "uid": "fa41ce90-7f8d-4530-b389-18ee1d7ea1ec",
+      "speciesId": "cornflower",
+      "seed": "center-4/C1–C2–C3",
+      "formVersion": 2,
+      "state": "fresh",
+      "collectedAt": "2026-11-26T15:56:19.856Z",
+      "pressedAt": null,
+      "sourceBoardId": "qa-69",
+      "sourceBoardTitle": "Четыре линии через B2",
+      "sourceLine": "C1–C2–C3",
+      "note": ""
+    }
+  ],
+  "book": [
+    {
+      "uid": "02e19434-c259-40b8-ba0d-896223654721",
+      "speciesId": "daisy",
+      "seed": "center-4/A1–B1–C1",
+      "formVersion": 2,
+      "state": "pressed",
+      "collectedAt": "2026-11-26T15:56:19.854Z",
+      "pressedAt": "2026-11-26T15:56:19.856Z",
+      "sourceBoardId": "qa-69",
+      "sourceBoardTitle": "Четыре линии через B2",
+      "sourceLine": "A1–B1–C1",
+      "note": ""
+    }
+  ],
+  "history": [],
+  "settings": {
+    "seedMode": "auto",
+    "manualSeed": "",
+    "coordinates": true,
+    "simpleMotion": false
+  },
+  "sound": false
+}

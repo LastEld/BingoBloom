@@ -1,41 +1,4 @@
-export const themes = {
-  matcha: {
-    name: 'Matcha & Cream',
-    paper: '#f9f8f3',
-    ink: '#303b31',
-    accent: '#49634d',
-    hero: '#e3ebd8',
-    card: '#edf1e4',
-    line: '#d8dbce'
-  },
-  nordic: {
-    name: 'Nordic Calm',
-    paper: '#f4f6f7',
-    ink: '#2b3b47',
-    accent: '#466779',
-    hero: '#dce7eb',
-    card: '#e6edf0',
-    line: '#cbd8de'
-  },
-  lavender: {
-    name: 'Soft Lavender',
-    paper: '#faf6f7',
-    ink: '#443746',
-    accent: '#76556e',
-    hero: '#e9e2ec',
-    card: '#f0e8ef',
-    line: '#dfd2dd'
-  },
-  dark: {
-    name: 'Dark Cozy',
-    paper: '#282825',
-    ink: '#f3ede1',
-    accent: '#b5c5a5',
-    hero: '#353d32',
-    card: '#3e473c',
-    line: '#55594e'
-  }
-};
+export {themes} from '../styles/tokens.js';
 export const artNames = ['book', 'cup', 'leaf', 'pen', 'music', 'sun', 'letter', 'heart', 'moon'];
 export const iconNames = {
   book: 'Книга',

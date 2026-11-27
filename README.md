@@ -17,6 +17,7 @@
 | Экспорт доски в PNG | [Экспорт](bingo-live/public/export/) |
 | Редактируемый макет для Figma | [Дизайн](bingo-live/design/) |
 | Автоматические проверки | [Тесты](bingo-live/test/) |
+| Материалы к задачам и результаты проверки | [План и источники](bingo-live/design/agent-handoff/research-materials.md) · [Проверка игры](bingo-live/design/agent-handoff/verification.md) |
 | Локальный сервер или процесс сборки | [Скрипты](bingo-live/scripts/) |
 
 ## Работа с проектом

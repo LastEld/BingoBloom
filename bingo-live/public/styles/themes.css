@@ -1,0 +1,106 @@
+/* Generated from tokens.js by npm run build. */
+:root {
+  --focus: #245e80;
+  --danger: #924637;
+  --paper: #f7f3ea;
+  --ink: #302c25;
+  --accent: #657054;
+  --hero: #e3ebd8;
+  --card: #edf1e4;
+  --line: #d9cdb8;
+  --panel: #fffdf8;
+  --muted: #403a32;
+  --reward: #f6e8df;
+  --terra: #88513c;
+  --tile0: #eaf0e2;
+  --tile1: #f6eadb;
+  --tile2: #e8edf0;
+  --tile3: #f2e6df;
+  --tile4: #ede8f1;
+  --tile5: #f5efd9;
+  --tile6: #e6eeea;
+  --tile7: #f3e5e3;
+  --tile8: #e9e9ef;
+  --journal-paper: #f7f3ea;
+  --journal-sheet: #f2ecde;
+  --journal-ink: #302c25;
+  --journal-caption: #403a32;
+  --journal-olive: #657054;
+  --journal-line: #d9cdb8;
+  --journal-danger: #924637;
+  --journal-focus: #245e80;
+  --journal-sans: "Segoe UI", Arial, sans-serif;
+  --journal-serif: Georgia, "Times New Roman", serif;
+}
+
+:root[data-theme="nordic"] {
+  --focus: #245e80;
+  --danger: #924637;
+  --paper: #f4f6f7;
+  --ink: #2b3b47;
+  --accent: #466779;
+  --hero: #dce7eb;
+  --card: #e6edf0;
+  --line: #cbd8de;
+  --panel: #fbfcfd;
+  --muted: #4d606c;
+  --reward: #e5eaf0;
+  --terra: #536a84;
+  --tile0: #dfe9e5;
+  --tile1: #efe8de;
+  --tile2: #dde8ee;
+  --tile3: #ece4df;
+  --tile4: #e5e5ee;
+  --tile5: #edead9;
+  --tile6: #dfebe8;
+  --tile7: #eee4e6;
+  --tile8: #e1e6ee;
+}
+
+:root[data-theme="lavender"] {
+  --focus: #245e80;
+  --danger: #924637;
+  --paper: #faf6f7;
+  --ink: #443746;
+  --accent: #76556e;
+  --hero: #e9e2ec;
+  --card: #f0e8ef;
+  --line: #dfd2dd;
+  --panel: #fffbfd;
+  --muted: #655566;
+  --reward: #f1e4eb;
+  --terra: #80546e;
+  --tile0: #e8ebdf;
+  --tile1: #f3e6dc;
+  --tile2: #e6e8f0;
+  --tile3: #f1e1dc;
+  --tile4: #eae1ef;
+  --tile5: #f3ecdb;
+  --tile6: #e4ece8;
+  --tile7: #f1e1e8;
+  --tile8: #e9e3ed;
+}
+
+:root[data-theme="dark"] {
+  --focus: #a5dcff;
+  --danger: #ffbba8;
+  --paper: #282825;
+  --ink: #f3ede1;
+  --accent: #b5c5a5;
+  --hero: #353d32;
+  --card: #3e473c;
+  --line: #55594e;
+  --panel: #30312d;
+  --muted: #cecbbd;
+  --reward: #463b34;
+  --terra: #e2af93;
+  --tile0: #384636;
+  --tile1: #493f31;
+  --tile2: #374247;
+  --tile3: #493a32;
+  --tile4: #443b49;
+  --tile5: #46432f;
+  --tile6: #33443e;
+  --tile7: #483a39;
+  --tile8: #3d3d47;
+}

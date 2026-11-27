@@ -3,6 +3,7 @@ import { createReadStream } from 'node:fs';
 import { stat } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
+import { makeWorker } from './offline.js';
 
 const directory = fileURLToPath(new URL('../public/', import.meta.url));
 const port = Number(process.env.PORT || 5173);
@@ -11,6 +12,7 @@ const types = {
   '.css': 'text/css; charset=utf-8',
   '.js': 'text/javascript; charset=utf-8',
   '.json': 'application/json; charset=utf-8',
+  '.webmanifest': 'application/manifest+json',
   '.jpg': 'image/jpeg',
   '.png': 'image/png',
   '.svg': 'image/svg+xml'
@@ -23,6 +25,12 @@ createServer(async (request, response) => {
   }
   try {
     const route = decodeURIComponent(new URL(request.url, 'http://localhost').pathname);
+    if (route === '/sw.js') {
+      const worker = await makeWorker(directory);
+      response.writeHead(200, {'Content-Type': 'text/javascript', 'Cache-Control': 'no-cache'});
+      response.end(request.method === 'HEAD' ? undefined : worker);
+      return;
+    }
     const file = path.resolve(directory, '.' + (route === '/' ? '/index.html' : route));
     const relative = path.relative(directory, file);
     if (!relative || relative.startsWith('..') || path.isAbsolute(relative) || !(await stat(file)).isFile()) {

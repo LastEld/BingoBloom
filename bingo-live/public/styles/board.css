@@ -5,62 +5,14 @@
 /* Theme and type */
 :root {
   color-scheme: light;
-  --paper: #f9f8f3;
-  --ink: #303b31;
-  --accent: #49634d;
-  --hero: #e3ebd8;
-  --card: #edf1e4;
-  --line: #d8dbce;
-  --panel: #fffefa;
-  --muted: #61675d;
-  --terra: #965641;
-  --reward: #f6e8df;
-  --tile0: #eaf0e2;
-  --tile1: #f6eadb;
-  --tile2: #e8edf0;
-  --tile3: #f2e6df;
-  --tile4: #ede8f1;
-  --tile5: #f5efd9;
-  --tile6: #e6eeea;
-  --tile7: #f3e5e3;
-  --tile8: #e9e9ef;
-  --serif: Georgia,"Times New Roman",serif;
-  font-family: "Segoe UI",Arial,sans-serif;
+  --serif: var(--journal-serif);
+  font-family: var(--journal-sans);
   font-synthesis: none;
   background: var(--paper);
   color: var(--ink);
 }
 
-:root[data-theme=nordic] {
-  --panel: #fbfcfd;
-  --muted: #526773;
-  --terra: #536a84;
-  --reward: #e5eaf0;
-}
-
-:root[data-theme=lavender] {
-  --panel: #fffbfd;
-  --muted: #705f71;
-  --terra: #855c73;
-  --reward: #f1e4eb;
-}
-
-:root[data-theme=dark] {
-  color-scheme: dark;
-  --panel: #30312d;
-  --muted: #c0c2b5;
-  --terra: #e2af93;
-  --reward: #463b34;
-  --tile0: #384636;
-  --tile1: #493f31;
-  --tile2: #374247;
-  --tile3: #493a32;
-  --tile4: #443b49;
-  --tile5: #46432f;
-  --tile6: #33443e;
-  --tile7: #483a39;
-  --tile8: #3d3d47;
-}
+:root[data-theme=dark] {color-scheme: dark}
 
 body {
   margin: 0;
@@ -99,8 +51,8 @@ button:disabled {
   cursor: default;
 }
 
-button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,canvas:focus-visible {
-  outline: 3px solid var(--accent);
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,canvas:focus-visible,summary:focus-visible {
+  outline: 3px solid var(--focus);
   outline-offset: 3px;
 }
 
@@ -110,7 +62,7 @@ svg {
 }
 
 button,input,select,textarea {
-  font-size: 14px;
+  font-size: 16px;
 }
 
 /* Navigation and page frame */
@@ -191,7 +143,7 @@ button,input,select,textarea {
   justify-content: center;
   gap: 8px;
   padding: 10px 16px;
-  min-height: 41px;
+  min-height: 44px;
   border-radius: 10px;
   border: 1px solid var(--line);
   font-size: 14px;
@@ -223,8 +175,8 @@ button,input,select,textarea {
 }
 
 .round {
-  width: 37px;
-  height: 37px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   justify-content: center;
   border: 1px solid var(--line);
@@ -814,6 +766,11 @@ button,input,select,textarea {
 
 .history-row {
   display: flex;
+  width: 100%;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  border: 0;
   gap: 15px;
   align-items: center;
   padding: 14px 0;
@@ -829,11 +786,12 @@ button,input,select,textarea {
   height: 40px;
 }
 
-.history-row h3 {
+.history-row strong {
   font: 600 16px/1.3 "Segoe UI",sans-serif;
 }
 
-.history-row p {
+.history-row .reward-text {
+  display: block;
   font: italic 18px/1.35 var(--serif);
   margin: 4px 0;
 }
@@ -876,8 +834,8 @@ dialog::backdrop {
 
 .dlg-head .round {
   flex: none;
-  width: 30px;
-  height: 30px;
+  width: 44px;
+  height: 44px;
 }
 
 .field {
@@ -1648,7 +1606,9 @@ dialog.card-stage::backdrop {
   display: grid;
   gap: 12px;
   max-height: 96dvh;
-  overflow: visible;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
   padding: 5px 9px 8px;
 }
 
@@ -1787,6 +1747,18 @@ dialog.card-stage::backdrop {
   overflow-wrap: anywhere;
 }
 
+.harvest-receipt { width: 100%; }
+.harvest-receipt h3 { margin: 4px 0; font: 20px var(--serif); }
+.harvest-receipt p { margin: 5px 0; }
+.harvest-item {
+  display: inline-flex; gap: 8px; align-items: center; padding: 5px 10px;
+  margin: 3px; border: 1px solid #fff5; border-radius: 9px; text-align: left;
+  color: var(--ink); background: var(--card); cursor: pointer;
+}
+.harvest-item canvas { width: 34px; height: 42px; }
+.harvest-item small { display: block; }
+.basket-item:focus { outline: 2px solid var(--accent); outline-offset: 3px; }
+
 .line-reward {
   padding: 7px 12px;
   background: #ffffff12;
@@ -1794,18 +1766,41 @@ dialog.card-stage::backdrop {
   border-radius: 10px;
 }
 
-.finish-flip.uncovered .reward-art {
-  animation: reward-turn .6s ease;
+.uncovered .keepsake-back::before {
+  border-style: solid;
+  border-color: #b7ad8780 #a7b5b477 #c298a566 #bcba9055;
 }
 
-.finish-dissolve.uncovered .keepsake-sign {
-  animation: desk-dim .6s ease;
+.keepsake-back > * {
+  position: relative;
+  z-index: 1;
 }
 
-.finish-strike.uncovered .keepsake-sign {
-  text-decoration: underline;
-  text-underline-offset: 5px;
-  animation: reward-turn .45s ease;
+@media (prefers-reduced-motion: no-preference) {
+  :root:not([data-simple-motion="true"]) .first-reveal .reward-art,
+  :root:not([data-simple-motion="true"]) .first-reveal .keepsake-back::before {
+    animation: foil-tilt 650ms ease-in-out;
+  }
+  :root:not([data-simple-motion="true"]) .first-reveal .keepsake-back::after {
+    content: "";
+    position: absolute;
+    inset: 12px;
+    pointer-events: none;
+    background: linear-gradient(113deg, transparent 40%, #d2e8dd60 47%, #fff8cc90 50%, #ecc7c640 53%, transparent 60%);
+    animation: foil-glint 650ms ease-out both;
+  }
+}
+
+@keyframes foil-tilt {
+  0%, 100% { transform: rotate(0); }
+  28% { transform: rotate(-2deg); }
+  65% { transform: rotate(2deg); }
+}
+
+@keyframes foil-glint {
+  from { transform: translateX(-100%); opacity: 0; }
+  25%, 65% { opacity: .8; }
+  to { transform: translateX(100%); opacity: 0; }
 }
 
 @keyframes desk-dim {
@@ -1813,17 +1808,6 @@ dialog.card-stage::backdrop {
     opacity: 0;
   }
   to {
-    opacity: 1;
-  }
-}
-
-@keyframes reward-turn {
-  from {
-    transform: rotateY(80deg) scale(.8);
-    opacity: 0;
-  }
-  to {
-    transform: none;
     opacity: 1;
   }
 }

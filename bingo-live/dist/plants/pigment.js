@@ -32,7 +32,37 @@ function pigmentMask(raster, random) {
   return mask;
 }
 
-export function tintSprite(image,file,pressed,random){
+// Measure the coloured corolla instead of the full sprite: some heads include
+// a long green stalk. The press leaves the disc dense while the outer petals
+// lose pigment and acquire a small contact crease.
+function headWash(raster, species, random) {
+  const {width, height, data} = raster;
+  let left = width, right = 0, top = height, bottom = 0;
+  for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
+    const i = (y * width + x) * 4;
+    if (data[i + 3] < 128 || (data[i + 1] > data[i] && data[i + 1] > data[i + 2] * 1.12)) continue;
+    left = Math.min(left, x); right = Math.max(right, x);
+    top = Math.min(top, y); bottom = Math.max(bottom, y);
+  }
+  const rx = Math.max(1, (right - left) / 2), ry = Math.max(1, (bottom - top) / 2);
+  const cx = left + rx, cy = top + ry, turn = random() * Math.PI * 2;
+  const depth = .68 + .32 * random();
+  return (pixel, wash) => {
+    const x = (pixel % width - cx) / rx, y = (Math.floor(pixel / width) - cy) / ry;
+    const r = Math.min(1, Math.hypot(x, y)), angle = Math.atan2(y, x) + turn;
+    if (species === 'clover') return depth * (7 - 14 * y + 6 * (wash - .5));
+    if (species === 'poppy') {
+      // Narrow darker overlaps in the thin lamina, between translucent lobes.
+      const fold = Math.max(0, Math.cos(4 * angle + 1.7 * r)) ** 5;
+      return depth * (10 * r - 28 * r * fold - 7 * (1 - r));
+    }
+    const edge = Math.max(0, (r - .38) / .62);
+    const rays = species === 'cornflower' ? 13 : 10;
+    return depth * (edge * (7 + 7 * Math.cos(rays * angle)) - 8 * (1 - r));
+  };
+}
+
+export function tintSprite(image,file,pressed,random,version=1){
   const surface=document.createElement('canvas');
   surface.width=image.naturalWidth;surface.height=image.naturalHeight;
   const ctx=surface.getContext('2d',{willReadFrequently:true});
@@ -42,6 +72,7 @@ export function tintSprite(image,file,pressed,random){
   const foliage=organ==='stems'||organ==='leaves';
   const floralTone=species==='daisy'?[1.08,.97,.78]:species==='cornflower'?[1.09,.84,.83]:[1.21,.77,.62];
   const leafTone=[1.12,.91,.62],mask=pressed?pigmentMask(raster,random):null;
+  const relief = version === 3 && pressed && organ === 'heads' ? headWash(raster, species, random) : null;
   for(let i=0;i<p.length;i+=4){
     if(!p[i+3])continue;
     const r=p[i],g=p[i+1],b=p[i+2],lum=.27*r+.57*g+.16*b;
@@ -58,6 +89,10 @@ export function tintSprite(image,file,pressed,random){
     p[i]=dryR+(freshR-dryR)*keep;
     p[i+1]=dryG+(freshG-dryG)*keep;
     p[i+2]=dryB+(freshB-dryB)*keep;
+    if (relief && !green) {
+      const delta = relief(i/4, mask[i/4]);
+      p[i] += delta; p[i+1] += delta; p[i+2] += delta;
+    }
   }
   ctx.putImageData(raster,0,0);return surface;
 }

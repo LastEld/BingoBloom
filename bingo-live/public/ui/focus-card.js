@@ -2,26 +2,6 @@ import { reduced } from './effects.js';
 const WIDTH = 420;
 const HEIGHT = 370;
 
-function wrapText(ctx, text, maxWidth) {
-  const lines = [];
-  let line = '';
-  for (const word of text.split(/\s+/)) {
-    if (line && ctx.measureText(line + ' ' + word).width > maxWidth) {
-      lines.push(line);
-      line = '';
-    }
-    for (const letter of (line ? ' ' : '') + word) {
-      if (line && ctx.measureText(line + letter).width > maxWidth) {
-        lines.push(line);
-        line = '';
-      }
-      line += letter;
-    }
-  }
-  if (line) lines.push(line);
-  return lines;
-}
-
 function paintFace(ctx, cell, picture, tone, ink, coord) {
   ctx.fillStyle = tone;
   ctx.fillRect(0, 0, WIDTH, HEIGHT);
@@ -54,25 +34,14 @@ function paintFace(ctx, cell, picture, tone, ink, coord) {
   ctx.font = '13px "Segoe UI", sans-serif';
   ctx.fillText(coord, WIDTH - 27, 37);
   ctx.textAlign = 'center';
-  let font = 32,
-    lines;
-  do {
-    ctx.font = font + 'px Georgia, serif';
-    lines = wrapText(ctx, cell.task, WIDTH - 64);
-    if (lines.length * font * 1.16 <= 135 || font <= 17) break;
-    font--;
-  } while (true);
-  const pictureSize = lines.length > 3 ? 77 : 105;
-  const textH = lines.length * font * 1.16;
-  const top = 56 + (HEIGHT - 102 - pictureSize - 16 - textH) / 2;
+  const pictureSize = 125;
+  const top = (HEIGHT - pictureSize) / 2;
   if (picture?.naturalWidth) {
     ctx.drawImage(picture, (WIDTH - pictureSize) / 2, top, pictureSize, pictureSize);
   } else {
     ctx.font = pictureSize * .7 + 'px "Segoe UI Emoji", sans-serif';
     ctx.fillText(picture ? '✿' : cell.icon, WIDTH / 2, top + pictureSize * .78);
   }
-  ctx.font = font + 'px Georgia, serif';
-  lines.forEach((s, i) => ctx.fillText(s, WIDTH / 2, top + pictureSize + 16 + font + i * font * 1.16));
   ctx.globalAlpha = .5;
   ctx.fillRect(WIDTH / 2 - 22, HEIGHT - 35, 44, 1);
   ctx.globalAlpha = 1;
@@ -98,12 +67,13 @@ export function liftCard(card, origin) {
 
 export function scratchFace({
   canvas,
+  openButton,
   cell,
   picture,
   tone,
   ink,
   coord,
-  onProgress,
+  onThreshold,
   onDone,
   onRub
 }) {
@@ -130,15 +100,11 @@ export function scratchFace({
   });
   let previous,
     pointer = null,
-    finished = false,
+    phase = 'covered',
+    skipWave = false,
     lastMeasure = 0,
     lastSound = 0;
-  let nextBand = 0,
-    frameId = 0,
-    strokeAnimating = false;
-  const brush = 52,
-    bandHeight = HEIGHT / 9;
-  ctx.lineWidth = brush;
+  ctx.lineWidth = 52;
   function remainingInk() {
     sampler.clearRect(0, 0, mask.width, mask.height);
     sampler.drawImage(canvas, 0, 0, mask.width, mask.height);
@@ -149,7 +115,13 @@ export function scratchFace({
   }
   const originalInk = remainingInk();
   let revealFrame = 0;
-  function reveal(erased) {
+  function showResult() {
+    if (phase !== 'revealing') return;
+    phase = 'done';
+    cancelAnimationFrame(revealFrame);
+    onDone();
+  }
+  function reveal() {
     // Freeze the exact brushwork. The wave travels from every existing opening.
     const face = document.createElement('canvas');
     face.width = canvas.width;
@@ -167,7 +139,6 @@ export function scratchFace({
     const original = fc.getImageData(0, 0, w, h).data;
     const distances = new Float32Array(w * h),
       softMask = fc.createImageData(w, h);
-    let initialInk = 0;
     for (let i = 0; i < distances.length; i++) {
       const x = (i % w + .5) * WIDTH / w,
         y = (Math.floor(i / w) + .5) * HEIGHT / h;
@@ -175,7 +146,6 @@ export function scratchFace({
         dy = Math.max(22 - y, 0, y - HEIGHT + 22);
       const alpha = original[i * 4 + 3];
       distances[i] = alpha < 70 && dx * dx + dy * dy < 21 * 21 ? 0 : w + h;
-      initialInk += alpha;
     }
     // Two chamfer passes approximate Euclidean distance on a square-pixel grid.
     for (const direction of [1, -1]) {
@@ -199,42 +169,42 @@ export function scratchFace({
     let farthest = 0;
     for (let i = 0; i < distances.length; i++) if (original[i * 4 + 3]) farthest = Math.max(farthest, distances[i]);
     const start = performance.now(),
-      duration = reduced() ? 360 : 2100,
+      duration = 2100,
       feather = 3;
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     function expand(time) {
+      if (phase !== 'revealing') return;
+      if (reduced()) return showResult();
       const t = Math.min(1, (time - start) / duration);
       const radius = (farthest + feather) * t * t * (3 - 2 * t);
-      let left = 0;
       for (let i = 0; i < distances.length; i++) {
         const coverage = Math.max(0, Math.min(1, (radius - distances[i]) / feather));
         const dissolve = coverage * coverage * (3 - 2 * coverage);
         softMask.data[i * 4 + 3] = 255 * dissolve;
-        left += original[i * 4 + 3] * (1 - dissolve);
       }
       fc.putImageData(softMask, 0, 0);
       ctx.globalCompositeOperation = 'copy';
       ctx.drawImage(face, 0, 0);
       ctx.globalCompositeOperation = 'destination-out';
       ctx.drawImage(field, 0, 0, canvas.width, canvas.height);
-      if (t < 1) {
-        onProgress(Math.min(99, Math.floor(100 * (1 - (1 - erased) * left / initialInk))));
-        revealFrame = requestAnimationFrame(expand);
-      } else {
-        onProgress(100);
-        onDone();
-      }
+      if (t < 1) revealFrame = requestAnimationFrame(expand);
+      else showResult();
     }
     revealFrame = requestAnimationFrame(expand);
   }
+  async function complete(immediate) {
+    if (immediate) skipWave = true;
+    if (phase === 'revealing' && skipWave) return showResult();
+    if (phase !== 'covered') return;
+    phase = 'saving';
+    const saved = await onThreshold();
+    if (!saved || phase !== 'saving' || !canvas.isConnected) return;
+    phase = 'revealing';
+    if (skipWave || reduced()) showResult();
+    else reveal();
+  }
   function measure() {
-    if (finished) return;
-    const erased = 1 - remainingInk() / originalInk;
-    onProgress(Math.floor(erased * 100));
-    if (erased >= .5) {
-      finished = true;
-      reveal(erased);
-    }
+    if (phase === 'covered' && remainingInk() <= originalInk / 2) complete(false);
   }
   function point(e) {
     const rect = canvas.getBoundingClientRect();
@@ -259,7 +229,7 @@ export function scratchFace({
     }
   }
   canvas.onpointerdown = e => {
-    if (finished || strokeAnimating || pointer !== null || e.button !== 0) return;
+    if (phase !== 'covered' || pointer !== null || e.button !== 0) return;
     e.preventDefault();
     canvas.focus({
       preventScroll: true
@@ -273,10 +243,10 @@ export function scratchFace({
     }, previous);
   };
   canvas.onpointermove = e => {
-    if (finished || e.pointerId !== pointer) return;
+    if (phase !== 'covered' || e.pointerId !== pointer) return;
     const events = e.getCoalescedEvents?.();
     for (const sample of events?.length ? events : [e]) {
-      if (finished) break;
+      if (phase !== 'covered') break;
       const current = point(sample);
       rub(previous, current);
       previous = current;
@@ -289,39 +259,14 @@ export function scratchFace({
   }
   canvas.onpointerup = canvas.onpointercancel = canvas.onlostpointercapture = end;
 
-  // Each keyboard gesture erases one visible band. It uses the same coverage test.
+  openButton.onclick = () => complete(true);
   canvas.onkeydown = e => {
     if (e.key !== 'Enter' && e.key !== ' ') return;
     e.preventDefault();
-    if (finished || pointer !== null || strokeAnimating || e.repeat) return;
-    strokeAnimating = true;
-    const y = (nextBand + .5) * bandHeight,
-      reverse = nextBand % 2 !== 0;
-    let x = reverse ? WIDTH : 0;
-    const start = performance.now();
-    function draw(now) {
-      if (finished || !canvas.isConnected) return;
-      const t = reduced() ? 1 : Math.min(1, (now - start) / 280);
-      const nextX = WIDTH * (reverse ? 1 - t : t);
-      rub({
-        x,
-        y
-      }, {
-        x: nextX,
-        y
-      });
-      x = nextX;
-      if (t < 1 && !finished) frameId = requestAnimationFrame(draw);else {
-        strokeAnimating = false;
-        nextBand = (nextBand + 1) % 9;
-        measure();
-      }
-    }
-    frameId = requestAnimationFrame(draw);
+    if (!e.repeat) complete(true);
   };
   return () => {
-    finished = true;
-    cancelAnimationFrame(frameId);
+    phase = 'closed';
     cancelAnimationFrame(revealFrame);
   };
 }

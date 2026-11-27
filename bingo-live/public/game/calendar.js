@@ -1,6 +1,7 @@
 import { esc } from './board.js';
 
 const stamp = new Intl.DateTimeFormat('ru-RU', {day:'numeric', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit'});
+const dates = new Intl.DateTimeFormat('ru-RU', {day:'numeric', month:'long', year:'numeric'});
 const monthTitle = new Intl.DateTimeFormat('ru-RU', {month:'long', year:'numeric'});
 const remaining = new Intl.NumberFormat('ru-RU', {style:'unit', unit:'day', unitDisplay:'long'});
 
@@ -26,6 +27,8 @@ export function boardPeriod(board) {
   return {start, end:endOfPeriod(start,board.durationLabel)};
 }
 export const formatPeriod = ({start,end}) => stamp.format(start)+' — '+stamp.format(end);
+// The deadline is exclusive. A cycle ending at midnight covers the preceding day.
+export const calendarRange = ({start,end}) => dates.formatRange(start, new Date(end.getTime()-1));
 
 export function periodStatus({start,end}, now = new Date()) {
   if (now < start) return 'До начала · '+remaining.format(Math.ceil((start-now)/86400000));

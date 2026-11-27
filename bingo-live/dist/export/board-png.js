@@ -24,7 +24,6 @@ function wrapped(ctx,text,x,y,maxWidth,maxLines,lineHeight){
 export async function makePNG(board,format){
   const canvas=document.createElement('canvas'),wide=1080,tall=format==='story'?1920:1080,story=tall>wide;
   canvas.width=wide;canvas.height=tall;const c=canvas.getContext('2d'),t=themes[board.theme];
-  const colors=Array.from({length:9},(_,i)=>getComputedStyle(document.documentElement).getPropertyValue('--tile'+i).trim());
   const pictures=await Promise.all(board.cells.map(cell=>artNames.includes(cell.icon)?image('icons/icon-'+cell.icon+'.png'):Promise.resolve(null)));
   const hero=await image('covers/'+(covers[board.cover] || covers.glasshouse).file),margin=58,inner=wide-margin*2,total=board.cells.length,count=board.cells.filter(x=>x.done).length;
   c.fillStyle=t.paper;c.fillRect(0,0,wide,tall);c.textAlign='left';c.fillStyle=t.ink;c.font='italic 31px Georgia';c.fillText('Bingo Bloom',margin,61);
@@ -34,18 +33,18 @@ export async function makePNG(board,format){
     const scale=Math.max(inner/hero.width,bannerH/hero.height),w=hero.width*scale,h=hero.height*scale;
     c.drawImage(hero,margin+(inner-w)/2,bannerY+(bannerH-h)/2,w,h);
     const wash=c.createLinearGradient(margin,0,margin+inner,0);
-    wash.addColorStop(0,'#fbf9eafc');wash.addColorStop(.68,'#fbf9eaf0');wash.addColorStop(1,'#fbf9ea30');
+    wash.addColorStop(0,t.paper+'fc');wash.addColorStop(.68,t.paper+'f0');wash.addColorStop(1,t.paper+'30');
     c.fillStyle=wash;c.fillRect(margin,bannerY,inner,bannerH);c.restore();
   }
-  c.fillStyle='#3f4e3a';c.font='bold 17px Segoe UI';c.fillText('ЛИЧНАЯ БИНГО-ДОСКА',margin+25,bannerY+36);
-  c.fillStyle='#2d3e2d';c.font=(story?'56':'42')+'px Georgia';wrapped(c,board.title,margin+25,bannerY+(story?100:87),story?800:625,2,story?58:44);
+  c.fillStyle=t.muted;c.font='bold 17px Segoe UI';c.fillText('ЛИЧНАЯ БИНГО-ДОСКА',margin+25,bannerY+36);
+  c.fillStyle=t.ink;c.font=(story?'56':'42')+'px Georgia';wrapped(c,board.title,margin+25,bannerY+(story?100:87),story?800:625,2,story?58:44);
   const bound=lineIds(board),lineSet=new Set(bound.flat());
   const labelY=bannerY+bannerH+(story?80:47);c.font='26px Georgia';c.fillText('Моё поле',margin,labelY);
   c.textAlign='right';c.font='20px Segoe UI';c.fillText(count+' из '+total+' выполнено',wide-margin,labelY);
   const gridY=labelY+(story?34:20),gridH=story?1050:Math.min(665,tall-gridY-78),gap=12,n=board.size,cw=(inner-gap*(n-1))/n,ch=(gridH-gap*(n-1))/n;
   for(let i=0;i<total;i++){
     const cell=board.cells[i],x=margin+i%n*(cw+gap),y=gridY+Math.floor(i/n)*(ch+gap),cx=x+cw/2;
-    rounded(c,x,y,cw,ch,15,cell.done?t.card:colors[cell.color%9],lineSet.has(i)?t.accent:t.line);
+    rounded(c,x,y,cw,ch,15,cell.done?t.card:t['tile'+cell.color%9],lineSet.has(i)?t.accent:t.line);
     c.textAlign='center';const imgH=Math.min(cw*.28,ch*.31),imgY=y+ch*.1;
     if(cell.done){c.fillStyle=t.accent;c.font='bold '+Math.floor(imgH*.72)+'px Segoe UI';c.fillText('✓',cx,imgY+imgH*.82);}
     else if(pictures[i])c.drawImage(pictures[i],cx-imgH/2,imgY,imgH,imgH);
