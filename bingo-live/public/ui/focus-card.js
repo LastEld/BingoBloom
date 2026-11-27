@@ -77,6 +77,7 @@ export function scratchFace({
   onDone,
   onRub
 }) {
+  const card = canvas.parentElement;
   const ratio = Math.min(devicePixelRatio || 1, 2);
   canvas.width = WIDTH * ratio;
   canvas.height = HEIGHT * ratio;
@@ -197,6 +198,7 @@ export function scratchFace({
     if (phase === 'revealing' && skipWave) return showResult();
     if (phase !== 'covered') return;
     phase = 'saving';
+    card.classList.remove('scratching');
     const saved = await onThreshold();
     if (!saved || phase !== 'saving' || !canvas.isConnected) return;
     phase = 'revealing';
@@ -214,6 +216,11 @@ export function scratchFace({
     };
   }
   function rub(a, b) {
+    if (!reduced()) {
+      card.style.setProperty('--brush-x', (100 * b.x / WIDTH) + '%');
+      card.style.setProperty('--brush-y', (100 * b.y / HEIGHT) + '%');
+      card.classList.add('scratching');
+    }
     ctx.beginPath();
     ctx.moveTo(a.x, a.y);
     ctx.lineTo(b.x, b.y);
@@ -255,6 +262,7 @@ export function scratchFace({
   function end(e) {
     if (e.pointerId !== pointer) return;
     pointer = null;
+    card.classList.remove('scratching');
     measure();
   }
   canvas.onpointerup = canvas.onpointercancel = canvas.onlostpointercapture = end;
@@ -267,6 +275,7 @@ export function scratchFace({
   };
   return () => {
     phase = 'closed';
+    card.classList.remove('scratching');
     cancelAnimationFrame(revealFrame);
   };
 }

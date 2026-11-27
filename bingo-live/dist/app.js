@@ -496,12 +496,13 @@ function openCard(i, origin = null) {
   basketOrigin = null;
   const cellOrigin = {boardId: b.id, cellId: c.id, scrollY: window.scrollY, top: origin?.top};
   const coord = String.fromCharCode(65 + i % b.size) + (Math.floor(i / b.size) + 1);
+  const personal = c.reward.trim();
   modal('Карточка ' + coord, `
     <div class="spotlight">
       <div class="stage-head"><span>${esc(b.title)} · ${coord}</span>
         <button class="round" data-do="close" aria-label="Вернуться к полю">${icon('close', 17)}</button></div>
       <div class="keepsake" data-color="${c.color}">
-        <div class="keepsake-back" aria-hidden="true" inert>${img('icon-heart', 'reward-art')}</div>
+        <div class="keepsake-back" aria-hidden="true" inert>${img('icon-heart', 'reward-art')}<p>${esc(personal || c.task)}</p><span class="keepsake-sign">Bingo Bloom</span></div>
         <canvas tabindex="0" role="button" aria-label="${esc('Открыть карточку. ' + c.task)}" aria-describedby="scratch-hint"></canvas>
       </div>
       <div class="stage-info" aria-live="polite"></div>
@@ -516,8 +517,6 @@ function openCard(i, origin = null) {
     if (firstReveal) card.classList.add('first-reveal');
     card.querySelector('canvas').remove();
     const reward = card.querySelector('.keepsake-back');
-    const personal = c.reward.trim();
-    reward.insertAdjacentHTML('beforeend', '<p>' + esc(personal || c.task) + '</p><span class="keepsake-sign">Bingo Bloom</span>');
     reward.inert = false;
     reward.removeAttribute('aria-hidden');
     dialog.querySelector('.undo-card').hidden = firstReveal;
@@ -574,7 +573,7 @@ function openCard(i, origin = null) {
         const newLine = result.added > 0;
         showReward(true, result.awards || []);
         sound(newLine ? 'line' : 'flip', store.sound);
-        if (newLine) petals(dialog);
+        if (newLine) petals(card);
       }
     });
     canvas.focus({
@@ -907,13 +906,11 @@ function currentPlant() {
   return list.find(p => p.uid === selectedPlant) || list.at(-1);
 }
 
-function highlight(source) {
+function highlight() {
   const b = board(),
     targets = new Set();
   if (!b) return;
-  if (source?.dataset.source === b.id) {
-    source.dataset.line.split('–').forEach(key => targets.add(key));
-  } else if (hint) {
+  if (hint) {
     const awarded = new Set([...b.harvest.map(p => p.sourceLine), ...b.legacyLines]);
     const options = allLines(b).filter(l => !awarded.has(lineKey(l, b.size)));
     options.sort((a, c) => c.filter(i => b.cells[i].done).length - a.filter(i => b.cells[i].done).length);
@@ -1182,12 +1179,6 @@ root.addEventListener('input', e => {
     }, null, true));
   }
 });
-for (const event of ['pointerover', 'focusin', 'pointerout', 'focusout']) {
-  root.addEventListener(event, e => {
-    const el = e.target.closest('[data-source]');
-    if (el && !el.contains(e.relatedTarget)) highlight(event === 'pointerover' || event === 'focusin' ? el : null);
-  });
-}
 function refreshPeriodStatus() {
   const status=$('#period-status');
   if(status)status.textContent=periodStatus(boardPeriod(board()));

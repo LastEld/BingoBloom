@@ -424,11 +424,6 @@ button,input,select,textarea {
   overflow: hidden;
 }
 
-.tile:hover .side {
-  border-color: color-mix(in srgb,var(--accent) 60%,var(--line));
-  box-shadow: 0 3px 9px #30362312;
-}
-
 .art {
   width: 54px;
   height: 51px;
@@ -1028,8 +1023,8 @@ input[type=checkbox] {
   z-index: 5;
 }
 
-.petals {
-  position: fixed;
+.keepsake .petals {
+  position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 40;
@@ -1537,33 +1532,8 @@ body {
   font-size: .875rem;
 }
 
-.tile {
-  transition: transform .23s cubic-bezier(.2,.8,.2,1);
-}
-
 .tile .side {
   box-shadow: inset 0 1px 0 #fff6,0 2px 3px #363a2910;
-}
-
-@media(hover:hover) {
-  .tile:hover {
-    transform: translateY(-3px) rotate(-.45deg);
-    z-index: 2;
-  }
-  .tile:hover .front {
-    box-shadow: 0 7px 11px -6px #28322555;
-  }
-  .tile:hover .front .art {
-    transform: translateY(-2px) rotate(3deg);
-  }
-}
-
-.tile:active {
-  transform: scale(.97);
-}
-
-.tile .front .art {
-  transition: transform .25s;
 }
 
 .journal-page .art {
@@ -1777,6 +1747,16 @@ dialog.card-stage::backdrop {
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  :root:not([data-simple-motion="true"]) .keepsake.scratching::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: radial-gradient(circle at var(--brush-x) var(--brush-y), transparent 12px, #fff2b46e 20px, transparent 36px);
+    box-shadow: inset 0 0 12px #f2cd8166;
+    animation: scratch-glow .7s ease-in-out infinite alternate;
+  }
   :root:not([data-simple-motion="true"]) .first-reveal .reward-art,
   :root:not([data-simple-motion="true"]) .first-reveal .keepsake-back::before {
     animation: foil-tilt 650ms ease-in-out;
@@ -1789,6 +1769,11 @@ dialog.card-stage::backdrop {
     background: linear-gradient(113deg, transparent 40%, #d2e8dd60 47%, #fff8cc90 50%, #ecc7c640 53%, transparent 60%);
     animation: foil-glint 650ms ease-out both;
   }
+}
+
+@keyframes scratch-glow {
+  from { opacity: .65; }
+  to { opacity: 1; }
 }
 
 @keyframes foil-tilt {
@@ -1881,9 +1866,6 @@ dialog.card-stage::backdrop {
 }
 
 @media(prefers-reduced-motion:reduce) {
-  .tile:hover,.tile:active,.tile:hover .front .art {
-    transform: none;
-  }
   .card-stage::backdrop,.keepsake-back,.reward-art {
     animation-duration: .01ms!important;
   }
@@ -1918,8 +1900,4 @@ dialog.card-stage::backdrop {
   background: var(--accent);
   border-color: var(--accent);
   color: var(--paper);
-}
-
-.checked-task.in-line .front {
-  border: 2px solid var(--accent);
 }
