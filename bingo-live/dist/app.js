@@ -8,7 +8,7 @@ import { themes, animations, artNames, iconNames, rewards, resizeBoard, shuffleB
 import {templateCatalog, creationDraft, creationForm, bindCreationForm} from './ui/board-creation.js';
 import { icon, blossom } from './ui/icons.js';
 import { sound, petals } from './ui/effects.js';
-import { liftCard, scratchFace } from './ui/focus-card.js';
+import { liftCard, playFinish, scratchFace } from './ui/focus-card.js';
 import { makePNG } from './export/board-png.js';
 import { openProgress } from './game/storage.js';
 import { harvestReceipt, capacityMessage } from './ui/harvest.js';
@@ -513,12 +513,12 @@ function openCard(i, origin = null) {
   const card = dialog.querySelector('.keepsake');
   const info = dialog.querySelector('.stage-info');
   function showReward(firstReveal = false, awards = []) {
-    card.classList.add('uncovered', 'finish-' + b.animation);
-    if (firstReveal) card.classList.add('first-reveal');
+    card.classList.add('uncovered');
     card.querySelector('canvas').remove();
     const reward = card.querySelector('.keepsake-back');
     reward.inert = false;
     reward.removeAttribute('aria-hidden');
+    if (firstReveal) playFinish(card, b.animation, c.task, store.settings.simpleMotion);
     dialog.querySelector('.undo-card').hidden = firstReveal;
     info.innerHTML = '<div class="task-receipt">' + icon('check', 16) + ' Задача выполнена' + (personal ? ' · ' + esc(c.task) : '') + '</div>';
     if (awards.length) {
@@ -809,6 +809,18 @@ function settings() {
   }, o.seedMode) + '</select>') + '<label class="field" id="manual-field">Свой код<input name="seed" maxlength="120" value="' + esc(o.manualSeed) + '"></label>' + [['coordinates', 'Показывать координаты клеток', o.coordinates], ['simpleMotion', 'Упрощённые анимации', o.simpleMotion], ['sound', 'Мягкие звуки при выполнении', store.sound]].map(([k, label, value]) => '<label class="check-label"><input type="checkbox" name="' + k + '" ' + (value ? 'checked' : '') + '>' + label + '</label>').join('') + '<div class="actions">' + button('Мои доски', 'collection', 'boards') + '<button class="btn primary">Сохранить</button></div></form>' + '<section class="backup-controls"><h3>Данные и резервная копия</h3><p class="hint">' + esc(warning || 'Сохранено на устройстве') + '</p>' + button('Экспортировать сохранение (.json)', 'backup') + '<label class="btn import-file">Импортировать сохранение (.json)<input id="import-file" type="file" accept=".json,application/json"></label>' + button('Сбросить весь прогресс', 'reset', '', 'plain') + '</section><offline-settings></offline-settings>');
   const form = $('#settings-form'),
     f = form.elements;
+  if (b) {
+    const row = f.animation.closest('label');
+    row.insertAdjacentHTML('afterend', '<div class="finish-sample"><button type="button" class="quiet">Посмотреть эффект</button><div class="keepsake sample-card" hidden aria-hidden="true"><div class="keepsake-back">' + img('icon-heart', 'reward-art') + '</div></div></div>');
+    const sample = form.querySelector('.sample-card');
+    const preview = () => {
+      sample.hidden = false;
+      playFinish(sample, f.animation.value, 'Задача выполнена', f.simpleMotion.checked);
+    };
+    row.nextElementSibling.querySelector('button').onclick = preview;
+    f.animation.onchange = preview;
+    f.simpleMotion.onchange = () => { if (!sample.hidden) preview(); };
+  }
   function seedField() {
     const manual = f.seedMode.value === 'manual';
     $('#manual-field').hidden = !manual;

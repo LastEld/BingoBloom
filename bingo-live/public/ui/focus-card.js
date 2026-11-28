@@ -59,6 +59,54 @@ export function liftCard(card, origin) {
   });
 }
 
+// The settings sample and the actual reward use the same drawing and timing.
+export function playFinish(card, mode, task, simpleMotion) {
+  card.querySelector('.finish-layer')?.remove();
+  const face = card.querySelector('.keepsake-back');
+  for (const animation of face.getAnimations()) animation.cancel();
+  if (simpleMotion || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const timing = {duration: 1150, easing: 'ease-in-out'};
+  if (mode === 'flip') {
+    face.animate([
+      {transform: 'perspective(760px) rotateY(-86deg)', filter: 'brightness(.65)'},
+      {transform: 'perspective(760px) rotateY(9deg)', filter: 'brightness(1.06)', offset: .78},
+      {transform: 'perspective(760px) rotateY(0deg)', filter: 'brightness(1)'}
+    ], timing);
+    return;
+  }
+  if (mode === 'dissolve') {
+    face.animate([
+      {opacity: .08, filter: 'blur(12px)'},
+      {opacity: .6, filter: 'blur(4px)', offset: .55},
+      {opacity: 1, filter: 'blur(0)'}
+    ], timing);
+    return;
+  }
+
+  const layer = document.createElement('div');
+  layer.className = 'finish-layer finish-' + mode;
+  layer.setAttribute('aria-hidden', 'true');
+  card.append(layer);
+  let animation;
+  if (mode === 'strike') {
+    const label = document.createElement('span');
+    label.textContent = task;
+    const stroke = document.createElement('i');
+    label.append(stroke);
+    layer.append(label);
+    stroke.animate([{transform: 'scaleX(0)'}, {transform: 'scaleX(1)'}],
+      {duration: 540, easing: 'ease-out', fill: 'both'});
+    animation = layer.animate([{opacity: 1}, {opacity: 1, offset: .68}, {opacity: 0}], timing);
+  } else {
+    animation = layer.animate([
+      {transform: 'translateX(108%)'},
+      {transform: 'translateX(-108%)'}
+    ], timing);
+  }
+  animation.onfinish = () => layer.remove();
+}
+
 export function scratchFace({
   canvas,
   openButton,

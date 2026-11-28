@@ -1738,6 +1738,58 @@ dialog.card-stage::backdrop {
   z-index: 1;
 }
 
+.finish-sample {
+  display: grid;
+  justify-items: start;
+  gap: 8px;
+}
+
+.sample-card {
+  max-width: 240px;
+  aspect-ratio: 2.5;
+  box-shadow: none;
+}
+
+.sample-card .keepsake-back { padding: 8px; }
+.sample-card .reward-art { height: 48px; }
+
+.finish-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.finish-strike {
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: var(--card) url('/assets/textures/paper.svg');
+  color: var(--ink);
+}
+
+.finish-strike span {
+  position: relative;
+  font: italic clamp(18px, 3vw, 28px)/1.2 var(--serif);
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.finish-strike i {
+  position: absolute;
+  inset: 50% -4px auto;
+  height: 3px;
+  border-radius: 60%;
+  background: var(--terra, var(--ink));
+  transform-origin: left;
+}
+
+.finish-scratch {
+  background: repeating-linear-gradient(164deg, transparent 0 9px, #fff9 10px 13px, transparent 14px 20px),
+    linear-gradient(105deg, transparent 24%, #d8bb70b3 38%, #fff5ce 49%, #c4bca3 54%, transparent 76%);
+  clip-path: polygon(0 2%,100% 0,98% 16%,100% 33%,95% 57%,100% 77%,97% 100%,0 98%,3% 80%,0 65%,5% 45%,0 22%);
+}
+
 @media (prefers-reduced-motion: no-preference) {
   :root:not([data-simple-motion="true"]) .keepsake.scratching::after {
     content: "";
@@ -1745,39 +1797,15 @@ dialog.card-stage::backdrop {
     inset: 0;
     z-index: 2;
     pointer-events: none;
-    background: radial-gradient(circle at var(--brush-x) var(--brush-y), transparent 12px, #fff2b46e 20px, transparent 36px);
-    box-shadow: inset 0 0 12px #f2cd8166;
+    background: radial-gradient(circle at var(--brush-x) var(--brush-y), transparent 13px, #fffdeb 18px, #e9b95c 21px, #ffdb8599 27px, transparent 44px);
+    box-shadow: inset 0 0 16px #e5ac51a6;
     animation: scratch-glow .7s ease-in-out infinite alternate;
-  }
-  :root:not([data-simple-motion="true"]) .first-reveal .reward-art,
-  :root:not([data-simple-motion="true"]) .first-reveal .keepsake-back::before {
-    animation: foil-tilt 650ms ease-in-out;
-  }
-  :root:not([data-simple-motion="true"]) .first-reveal .keepsake-back::after {
-    content: "";
-    position: absolute;
-    inset: 12px;
-    pointer-events: none;
-    background: linear-gradient(113deg, transparent 40%, #d2e8dd60 47%, #fff8cc90 50%, #ecc7c640 53%, transparent 60%);
-    animation: foil-glint 650ms ease-out both;
   }
 }
 
 @keyframes scratch-glow {
   from { opacity: .65; }
   to { opacity: 1; }
-}
-
-@keyframes foil-tilt {
-  0%, 100% { transform: rotate(0); }
-  28% { transform: rotate(-2deg); }
-  65% { transform: rotate(2deg); }
-}
-
-@keyframes foil-glint {
-  from { transform: translateX(-100%); opacity: 0; }
-  25%, 65% { opacity: .8; }
-  to { transform: translateX(100%); opacity: 0; }
 }
 
 @keyframes desk-dim {
